@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Bunga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+    <header class="bg-indigo-600 text-white py-6">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold text-center">Kalkulator Bunga</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 flex-grow">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl font-semibold text-center mb-8">Pilih Jenis Perhitungan Bunga</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Bunga Majemuk -->
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-4">Bunga Majemuk</h3>
+                    <p class="text-gray-600 mb-6">Hitung bunga yang dihitung berdasarkan pokok ditambah bunga sebelumnya.</p>
+                    <a href="bunga/majemuk.html" class="block w-full bg-indigo-600 text-white text-center py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                        Pilih Bunga Majemuk
+                    </a>
+                </div>
+
+                <!-- Bunga Tunggal -->
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-4">Bunga Tunggal</h3>
+                    <p class="text-gray-600 mb-6">Hitung bunga yang dihitung hanya berdasarkan pokok pinjaman awal.</p>
+                    <a href="bunga/tunggal.html" class="block w-full bg-green-600 text-white text-center py-2 px-4 rounded-md hover:bg-green-700 transition duration-300">
+                        Pilih Bunga Tunggal
+                    </a>
+                </div>
+
+                <!-- Anuitas -->
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-4">Anuitas</h3>
+                    <p class="text-gray-600 mb-6">Hitung pembayaran cicilan yang tetap selama periode tertentu.</p>
+                    <a href="bunga/anuitas.html" class="block w-full bg-yellow-600 text-white text-center py-2 px-4 rounded-md hover:bg-yellow-700 transition duration-300">
+                        Pilih Anuitas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-4 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; <span id="currentYear"></span> Kalkulator Bunga.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

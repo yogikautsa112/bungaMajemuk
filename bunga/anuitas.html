@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Cicilan dengan Bunga Tunggal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center py-12">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Kalkulator Cicilan</h1>
+        <form id="cicilanForm" class="space-y-4">
+            <div>
+                <label for="loanAmount" class="block text-sm font-medium text-gray-700">Jumlah Pinjaman</label>
+                <input type="number" id="loanAmount" name="loanAmount" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Masukkan jumlah pinjaman">
+            </div>
+            <div>
+                <label for="rate" class="block text-sm font-medium text-gray-700">Suku Bunga (%)</label>
+                <input type="number" id="rate" name="rate" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Masukkan suku bunga">
+            </div>
+            <div>
+                <label for="time" class="block text-sm font-medium text-gray-700">Jangka Waktu (tahun)</label>
+                <input type="number" id="time" name="time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Masukkan jangka waktu">
+            </div>
+            <button type="submit" class="w-full bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
+                Hitung
+            </button>
+        </form>
+
+        <div id="resultDiv" class="mt-6 p-4 bg-yellow-100 rounded-md hidden">
+            <h2 class="text-lg font-semibold text-yellow-800 mb-2">Hasil Perhitungan:</h2>
+            <p id="resultText" class="text-yellow-700"></p>
+        </div>
+    </div>
+
+    <script>
+        function hitungCicilan(loanAmount, rate, time) {
+            // 1. Hitung bunga per tahun
+            const bungaPerTahun = (rate / 100) * loanAmount;
+
+            // 2. Hitung total bunga selama periode
+            const totalBunga = bungaPerTahun * time;
+
+            // 3. Hitung total yang harus dibayar
+            const totalBayar = loanAmount + totalBunga;
+
+            // 4. Hitung cicilan per bulan
+            const cicilanPerBulan = totalBayar / (time * 12);
+
+            return { cicilanPerBulan, totalBayar };
+        }
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(angka);
+        }
+
+        const form = document.getElementById('cicilanForm');
+        const resultsDiv = document.getElementById('resultDiv');
+        const resultText = document.getElementById('resultText');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const time = parseFloat(document.getElementById('time').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+
+            const hasil = hitungCicilan(loanAmount, rate, time);
+
+            resultText.innerHTML = `
+                <p>Pinjaman: ${formatRupiah(loanAmount)}</p>
+                <p>Total yang Harus Dibayar: ${formatRupiah(hasil.totalBayar)}</p>
+                <p>Cicilan per Bulan: ${formatRupiah(hasil.cicilanPerBulan)}</p>
+            `;
+            resultsDiv.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
