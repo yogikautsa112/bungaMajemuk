@@ -16,23 +16,13 @@
           <label for="deposit" class="block text-sm font-medium text-gray-700"
             >Jumlah Deposit</label
           >
-          <div class="flex">
-            <input
-              type="number"
-              id="deposit"
-              name="deposit"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="Masukkan jumlah deposit"
-            />
-            <select
-              id="depositType"
-              name="depositType"
-              class="mt-1 ml-2 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            >
-              <option value="perbulan">Perbulan</option>
-              <option value="pertahun">Pertahun</option>
-            </select>
-          </div>
+          <input
+            type="number"
+            id="deposit"
+            name="deposit"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            placeholder="Masukkan jumlah deposit"
+          />
         </div>
         <div>
           <label for="rate" class="block text-sm font-medium text-gray-700"
@@ -49,40 +39,15 @@
         </div>
         <div>
           <label for="time" class="block text-sm font-medium text-gray-700"
-            >Jangka Waktu</label
+            >Jangka Waktu (Tahun)</label
           >
-          <div class="flex">
-            <input
-              type="number"
-              id="time"
-              name="time"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="Masukkan jangka waktu"
-            />
-            <select
-              id="timeUnit"
-              name="timeUnit"
-              class="mt-1 ml-2 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            >
-              <option value="tahun">Tahun</option>
-              <option value="bulan">Bulan</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label for="frequency" class="block text-sm font-medium text-gray-700"
-            >Frekuensi Perhitungan</label
-          >
-          <select
-            id="frequency"
-            name="frequency"
+          <input
+            type="number"
+            id="time"
+            name="time"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          >
-            <option value="12">Bulanan</option>
-            <option value="4">Triwulan</option>
-            <option value="3">Caturwulan</option>
-            <option value="2">Semester</option>
-          </select>
+            placeholder="Masukkan jangka waktu"
+          />
         </div>
         <button
           type="submit"
@@ -94,30 +59,9 @@
       <div id="resultDiv" class="mt-6 hidden"></div>
     </div>
     <script>
-      // Fungsi untuk menghitung Bunga Majemuk berdasarkan frekuensi dan jangka waktu
-      function hitungBungaMajemuk(
-        deposit,
-        time,
-        rate,
-        frequency,
-        isYear,
-        depositPerMonth
-      ) {
-        let totalTimeInYears;
-        if (isYear) {
-          totalTimeInYears = time; // Jika inputnya tahun
-        } else {
-          totalTimeInYears = time / 12; // Jika inputnya bulan, ubah jadi tahun
-        }
-
-        if (depositPerMonth) {
-          // Jika deposit dilakukan per bulan, kalikan deposit dengan 12
-          deposit = deposit * 12;
-        }
-
-        let total =
-          deposit *
-          Math.pow(1 + rate / frequency, totalTimeInYears * frequency);
+      // Fungsi untuk menghitung Bunga Majemuk berdasarkan jangka waktu
+      function hitungBungaMajemuk(deposit, time, rate) {
+        let total = deposit * Math.pow(1 + rate / 1, time * 1);
         let bunga = total - deposit;
         return {
           bunga: bunga,
@@ -142,26 +86,9 @@
         const deposit = parseFloat(document.getElementById("deposit").value);
         const time = parseFloat(document.getElementById("time").value);
         const rate = parseFloat(document.getElementById("rate").value) / 100;
-        const frequency = parseFloat(
-          document.getElementById("frequency").value
-        ); // Frekuensi perhitungan
-        const timeUnit = document.getElementById("timeUnit").value; // Tahun atau Bulan
-        const depositType = document.getElementById("depositType").value; // Perbulan atau Pertahun
 
-        // Cek apakah jangka waktu dalam tahun atau bulan
-        const isYear = timeUnit === "tahun";
-        // Cek apakah deposit dilakukan per bulan
-        const depositPerMonth = depositType === "perbulan";
-
-        // Hitung bunga majemuk berdasarkan frekuensi, jangka waktu, dan jenis deposit
-        const hasil = hitungBungaMajemuk(
-          deposit,
-          time,
-          rate,
-          frequency,
-          isYear,
-          depositPerMonth
-        );
+        // Hitung bunga majemuk berdasarkan jangka waktu
+        const hasil = hitungBungaMajemuk(deposit, time, rate);
 
         resultsDiv.innerHTML = `
           <h2 class="text-xl font-semibold text-gray-800 mb-4">Hasil Perhitungan Bunga Majemuk</h2>
